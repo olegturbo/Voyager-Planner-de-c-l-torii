@@ -13,8 +13,7 @@
     echo "<p>Mesaj: $message</p>";
 ?>
 
-<script>
-    
+<script>  
     console.log("<?php echo $message; ?>");
 </script>
 
