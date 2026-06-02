@@ -51,7 +51,7 @@ function loginUser(string $email, string $password): ?array
 
 function setSession(array $user): void
 {
-    $_SESSION['voy_user_id']   = $user['id'];
+    $_SESSION['voy_user_id'] = $user['id'];
     $_SESSION['voy_user_name'] = $user['name'];
     $_SESSION['voy_user_email'] = $user['email'];
 }
@@ -60,8 +60,8 @@ function getSessionUser(): ?array
 {
     if (empty($_SESSION['voy_user_id'])) return null;
     return [
-        'id'    => $_SESSION['voy_user_id'],
-        'name'  => $_SESSION['voy_user_name'],
+        'id' => $_SESSION['voy_user_id'],
+        'name' => $_SESSION['voy_user_name'],
         'email' => $_SESSION['voy_user_email'],
     ];
 }

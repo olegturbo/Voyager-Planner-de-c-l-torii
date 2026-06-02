@@ -7,11 +7,11 @@ $error   = '';
 $fields  = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name    = trim($_POST['name']    ?? '');
-    $email   = trim($_POST['email']   ?? '');
+    $name = trim($_POST['name']    ?? '');
+    $email = trim($_POST['email']   ?? '');
     $subject = trim($_POST['subject'] ?? '');
     $message = trim($_POST['message'] ?? '');
-    $fields  = compact('name', 'email', 'subject', 'message');
+    $fields = compact('name', 'email', 'subject', 'message');
 
     if (!$name || !$email || !$message) {
         $error = 'Câmpurile Nume, Email și Mesaj sunt obligatorii.';
@@ -23,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Mesajul trebuie să conțină cel puțin 10 caractere.';
     } else {
         saveContactMessage([
-            'name'    => sanitize($name),
-            'email'   => sanitize($email),
+            'name' => sanitize($name),
+            'email' => sanitize($email),
             'subject' => sanitize($subject),
             'message' => sanitize($message),
         ]);
@@ -152,14 +152,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 
     <footer class="footer">
-        <div>
-            <div class="footer-brand">✈ VOY<span>AGE</span>R</div>
-            <p>&copy; <?= date('Y') ?> Voyager Travel Planner.</p>
-        </div>
-        <div class="footer-links">
-            <a href="index.php">Acasă</a>
-            <a href="contact.php">Contact</a>
-        </div>
+        <span class="footer-brand">✈VOYAGER</span>
+        <span>© <?= date('Y') ?> Voyager Travel Planner. Proiect educațional.</span>
+        <nav class="footer-links">
+            <a href="index.php">ACASĂ</a>
+            <a href="about.php">DESPRE</a>
+            <a href="contact.php">CONTACT</a>
+        </nav>
     </footer>
     <script src="js/script.js"></script>
 </body>

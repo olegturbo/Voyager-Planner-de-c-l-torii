@@ -172,7 +172,7 @@
 
         <!--  FOOTER -->
         <footer class="footer">
-            <span class="footer-brand">+ VOYAGER</span>
+            <span class="footer-brand">✈VOYAGER</span>
             <span>© <?= date('Y') ?> Voyager Travel Planner. Proiect educațional.</span>
             <nav class="footer-links">
                 <a href="index.php">ACASĂ</a>

@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// If already logged in, redirect
+
 if (isLoggedIn()) {
     header('Location: dashboard.php');
     exit;
