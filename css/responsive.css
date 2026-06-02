@@ -1,0 +1,115 @@
+@media (max-width: 1024px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-right {
+        height: 320px;
+    }
+
+    .hero-left {
+        padding: 3rem 2.5rem;
+    }
+
+    .features-strip {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-item {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .section, .dashboard-page {
+        padding: 3rem 2.5rem;
+    }
+
+    .about-content, .contact-page {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .itinerary-section {
+        padding: 3rem 2.5rem;
+    }
+
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dash-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: var(--nav-h);
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 8px 24px var(--shadow);
+        gap: 0.5rem;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .section, .dashboard-page, .about-content, .contact-page {
+        padding: 2rem 1.5rem;
+    }
+
+    .hero-left {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .dashboard-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .auth-card {
+        padding: 2rem;
+    }
+
+    .itinerary-section {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-cta {
+        flex-direction: column;
+    }
+
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
