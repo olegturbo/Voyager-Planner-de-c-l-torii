@@ -1,9 +1,4 @@
 <?php
-
-/**
- * VOYAGER — php/save_data.php
- * Doar ce e necesar pentru contact.php
- */
 session_start();
 header('Content-Type: application/json');
 require_once __DIR__ . '/functions.php';

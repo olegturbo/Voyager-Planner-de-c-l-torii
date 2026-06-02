@@ -1,10 +1,5 @@
 <?php
 
-/**
- * VOYAGER — php/functions.php
- * Doar ce e necesar pentru contact.php
- */
-
 define('DATA_PATH', __DIR__ . '/../data/');
 
 // ─── Sanitizare input ───────────────────────
@@ -32,15 +27,9 @@ function saveContactMessage(array $msg): void
     file_put_contents($file, json_encode($existing, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 }
 
-// ─── Răspuns JSON pentru AJAX ───────────────
 function jsonResponse(bool $success, string $message, array $data = []): never
 {
     header('Content-Type: application/json');
     echo json_encode(['success' => $success, 'message' => $message, 'data' => $data]);
     exit;
 }
-
-// ─── Creează folderul data/ dacă nu există ──
-if (!is_dir(DATA_PATH)) mkdir(DATA_PATH, 0755, true);
-$msgFile = DATA_PATH . 'messages.json';
-if (!file_exists($msgFile)) file_put_contents($msgFile, '[]');
