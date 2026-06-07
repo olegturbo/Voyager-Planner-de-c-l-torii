@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <li><a href="login.php">AUTENTIFICARE</a></li>
             <li><a href="register.php">ÎNREGISTRARE</a></li>
         </ul>
+
         <div class="nav-controls">
             <button class="btn-theme" id="themeBtn" onclick="toggleTheme()" title="Schimbă tema">
                 <svg id="iconMoon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

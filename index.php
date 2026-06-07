@@ -19,7 +19,7 @@
 
         <!-- NAVBAR -->
         <nav class="navbar" id="navbar">
-            <a class="nav-brand" href="index.php">+ VOY<span>AGE</span>R</a>
+            <a class="nav-brand" href="index.php">✈ VOY<span>AGE</span>R</a>
 
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.php" class="active">ACASĂ</a></li>
