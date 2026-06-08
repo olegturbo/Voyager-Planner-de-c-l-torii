@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label class="form-label" for="confirm">Confirmă parola</label>
                         <input type="password" id="confirm" name="confirm" class="form-input" placeholder="Repetă parola">
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem">Înregistrează-te</button>
+                    <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem;display:inline-block; text-align:center;">Înregistrează-te</button>
                 </form>
 
                 <div class="auth-footer">

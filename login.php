@@ -82,7 +82,7 @@ if (isLoggedIn()) {
                         <label class="form-label" for="password">Parolă</label>
                         <input type="password" id="password" name="password" class="form-input" placeholder="••••••••">
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem">Autentifică-te</button>
+                    <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem; display:inline-block; text-align:center;">Autentifică-te</button>
                 </form>
 
                 <div class="auth-footer">
