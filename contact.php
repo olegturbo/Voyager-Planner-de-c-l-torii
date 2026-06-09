@@ -1,17 +1,21 @@
 <?php
 session_start();
 require_once 'php/function.php';
+require_once 'php/auth.php';
+
+$currentPage = 'contact';
+$pageTitle = "Contact — Voyager";
 
 $success = '';
-$error   = '';
-$fields  = [];
+$error = '';
+$fields = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['name']    ?? '');
-    $email = trim($_POST['email']   ?? '');
+    $name    = trim($_POST['name']    ?? '');
+    $email   = trim($_POST['email']   ?? '');
     $subject = trim($_POST['subject'] ?? '');
     $message = trim($_POST['message'] ?? '');
-    $fields = compact('name', 'email', 'subject', 'message');
+    $fields  = compact('name', 'email', 'subject', 'message');
 
     if (!$name || !$email || !$message) {
         $error = 'Câmpurile Nume, Email și Mesaj sunt obligatorii.';
@@ -23,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Mesajul trebuie să conțină cel puțin 10 caractere.';
     } else {
         saveContactMessage([
-            'name' => sanitize($name),
-            'email' => sanitize($email),
+            'name'    => sanitize($name),
+            'email'   => sanitize($email),
             'subject' => sanitize($subject),
             'message' => sanitize($message),
         ]);
@@ -33,6 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+<!DOCTYPE html>
+...
 <!DOCTYPE html>
 <html lang="ro" data-theme="light">
 
@@ -47,26 +53,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div id="toastContainer" class="toast-container"></div>
 
+    <!-- includes/navbar.php -->
     <nav class="navbar">
         <a class="nav-brand" href="index.php">✈ VOY<span>AGE</span>R</a>
         <ul class="nav-links" id="navLinks">
-            <li><a href="index.php">Acasă</a></li>
-            <li><a href="index.php">Destinații</a></li>
-            <li><a href="contact.php" class="active">Contact</a></li>
-            <?php if (!empty($_SESSION['voy_user_id'])): ?>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="logout.php">Deconectare</a></li>
+            <li><a href="index.php" <?= $currentPage === 'home' ? 'class="active"' : '' ?>>ACASĂ</a></li>
+            <li><a href="about.php" <?= $currentPage === 'about' ? 'class="active"' : '' ?>>DESPRE</a></li>
+            <li><a href="destinations.php" <?= $currentPage === 'destinations' ? 'class="active"' : '' ?>>DESTINAȚII</a></li>
+            <li><a href="contact.php" <?= $currentPage === 'contact' ? 'class="active"' : '' ?>>CONTACT</a></li>
+            <?php if (isLoggedIn()): ?>
+                <li><a href="dashboard.php" <?= $currentPage === 'dashboard' ? 'class="active"' : '' ?>>TABLOU DE BORD</a></li>
+                <li><a href="logout.php">DECONECTARE</a></li>
             <?php else: ?>
-                <li><a href="login.php">Autentificare</a></li>
-                <li><a href="register.php">Înregistrare</a></li>
+                <li><a href="login.php" <?= $currentPage === 'login' ? 'class="active"' : '' ?>>AUTENTIFICARE</a></li>
+                <li><a href="register.php" <?= $currentPage === 'register' ? 'class="active"' : '' ?>>ÎNREGISTRARE</a></li>
             <?php endif; ?>
         </ul>
         <div class="nav-controls">
-            <select class="lang-select" id="langSelect" onchange="changeLang(this.value)">
-                <option value="ro">RO</option>
-                <option value="en">EN</option>
-                <option value="ru">RU</option>
-            </select>
             <button class="btn-theme" id="themeBtn" onclick="toggleTheme()" title="Schimbă tema">
                 <svg id="iconMoon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
@@ -83,10 +86,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
                 </svg>
             </button>
-            <button class="btn-icon hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+            <button class="hamburger" onclick="toggleNav()" aria-label="Meniu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
-
     <main style="padding-top:var(--nav-h)">
         <div class="contact-page">
             <div class="contact-info">
@@ -160,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="contact.php">CONTACT</a>
         </nav>
     </footer>
-    <script src="js/script.js"></script>
+    <script src="script/script.js"></script>
 </body>
 
 </html>

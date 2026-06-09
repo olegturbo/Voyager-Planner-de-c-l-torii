@@ -4,9 +4,12 @@ require_once 'php/auth.php';
 require_once 'php/function.php';
 requireLogin();
 
-$user  = getSessionUser();
-$items = getItems();
-$dests = count($items);
+$currentPage = 'dashboard';
+$pageTitle = "Dashboard — Voyager";
+
+$user     = getSessionUser();
+$items    = getItems(); // verifică că această funcție există
+$dests    = count($items);
 $countries = count(array_unique(array_column($items, 'country')));
 ?>
 <!DOCTYPE html>
@@ -22,22 +25,23 @@ $countries = count(array_unique(array_column($items, 'country')));
 <body>
     <div id="toastContainer" class="toast-container"></div>
 
+    <!-- includes/navbar.php -->
     <nav class="navbar">
         <a class="nav-brand" href="index.php">✈ VOY<span>AGE</span>R</a>
         <ul class="nav-links" id="navLinks">
-            <li><a href="index.php">Acasă</a></li>
-            <li><a href="index.php#about">Despre</a></li>
-            <li><a href="index.php#features">Destinații</a></li>
-            <li><a href="dashboard.php" class="active">Tablou de bord</a></li>
-            <li><a href="contact.php">Contact</a></li>
-            <li><a href="logout.php" onclick="return confirm('Te deconectezi?')">Deconectare</a></li>
+            <li><a href="index.php" <?= $currentPage === 'home' ? 'class="active"' : '' ?>>ACASĂ</a></li>
+            <li><a href="about.php" <?= $currentPage === 'about' ? 'class="active"' : '' ?>>DESPRE</a></li>
+            <li><a href="destinations.php" <?= $currentPage === 'destinations' ? 'class="active"' : '' ?>>DESTINAȚII</a></li>
+            <li><a href="contact.php" <?= $currentPage === 'contact' ? 'class="active"' : '' ?>>CONTACT</a></li>
+            <?php if (isLoggedIn()): ?>
+                <li><a href="dashboard.php" <?= $currentPage === 'dashboard' ? 'class="active"' : '' ?>>TABLOU DE BORD</a></li>
+                <li><a href="logout.php">DECONECTARE</a></li>
+            <?php else: ?>
+                <li><a href="login.php" <?= $currentPage === 'login' ? 'class="active"' : '' ?>>AUTENTIFICARE</a></li>
+                <li><a href="register.php" <?= $currentPage === 'register' ? 'class="active"' : '' ?>>ÎNREGISTRARE</a></li>
+            <?php endif; ?>
         </ul>
         <div class="nav-controls">
-            <select class="lang-select" id="langSelect" onchange="changeLang(this.value)">
-                <option value="ro">RO</option>
-                <option value="en">EN</option>
-                <option value="ru">RU</option>
-            </select>
             <button class="btn-theme" id="themeBtn" onclick="toggleTheme()" title="Schimbă tema">
                 <svg id="iconMoon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
@@ -54,7 +58,7 @@ $countries = count(array_unique(array_column($items, 'country')));
                     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
                 </svg>
             </button>
-            <button class="btn-icon hamburger" onclick="toggleNav()">
+            <button class="hamburger" onclick="toggleNav()" aria-label="Meniu">
                 <span></span><span></span><span></span>
             </button>
         </div>
@@ -137,7 +141,7 @@ $countries = count(array_unique(array_column($items, 'country')));
             <p>&copy; <?= date('Y') ?> Voyager Travel Planner.</p>
         </div>
     </footer>
-    <script src="js/script.js"></script>
+    <script src="script/script.js"></script>
 </body>
 
 </html>

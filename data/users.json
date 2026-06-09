@@ -6,5 +6,13 @@
         "password": "$2y$10$J\/uyu0ZMO47HlqYTHxkq1eXKK7UIooxNdmmvWXI2Vaa3hSGMDjmey",
         "joined": "2026-06-02T10:03:45+02:00",
         "role": "user"
+    },
+    {
+        "id": "usr_6a27ce0288f103.13880118",
+        "name": "Oleg",
+        "email": "oleg665@gmail.com",
+        "password": "$2y$10$b5A.qFXCSxecwfPfFVHWO.Z4VAq4tNYpIJMX85QBT5FgH.HmPBiae",
+        "joined": "2026-06-09T10:25:38+02:00",
+        "role": "user"
     }
 ]
