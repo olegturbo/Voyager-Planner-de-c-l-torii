@@ -55,9 +55,9 @@ $pageTitle = "Voyager — Travel Planner";
 
         <div class="nav-controls">
             <select class="lang-select" id="langSelect" onchange="changeLang(this.value)">
-                <option value="ro">🇷🇴 RO</option>
-                <option value="en">🇬🇧 EN</option>
-                <option value="ru">🇷🇺 RU</option>
+                <option value="ro">RO</option>
+                <option value="en">EN</option>
+                <option value="ru">RU</option>
             </select>
             <button class="btn-icon" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
             <button class="btn-icon hamburger" onclick="toggleNav()" aria-label="Menu">
