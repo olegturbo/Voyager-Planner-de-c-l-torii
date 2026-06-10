@@ -1,21 +1,248 @@
-function doTranslate(lang) {
-    const select = document.querySelector('.goog-te-combo');
-    if (!select) {
-        setTimeout(() => doTranslate(lang), 400);
-        return;
-    }
-    select.value = lang === 'ro' ? '' : lang;
-    select.dispatchEvent(new Event('change'));
-}
+/* =============================================
+   VOYAGER — script.js
+   All client-side logic: auth, theme, lang, CRUD
+   ============================================= */
 
-function changeLang(lang) {
-    state.lang = lang;
-    localStorage.setItem('voy_lang', lang);
-    applyLang();
-    doTranslate(lang);
-    if (state.currentPage === 'features') renderDestinations();
-    if (state.currentPage === 'dashboard') renderDashboard();
-}
+// ─── TRANSLATIONS ────────────────────────────
+const TRANSLATIONS = {
+    ro: {
+        nav_home: "Acasă",
+        nav_about: "Despre",
+        nav_features: "Destinații",
+        nav_dashboard: "Tablou de bord",
+        nav_contact: "Contact",
+        nav_login: "Autentificare",
+        nav_register: "Înregistrare",
+        nav_logout: "Deconectare",
+        hero_eyebrow: "Planificatorul tău de călătorii",
+        hero_title_1: "Explorează",
+        hero_title_2: "lumea",
+        hero_title_3: "cu stil",
+        hero_sub: "Planifică rute de neuitat, descoperă destinații ascunse și poartă cu tine fiecare amintire a drumului.",
+        hero_btn1: "Începe aventura",
+        hero_btn2: "Descoperă destinații",
+        stat1: "Destinații",
+        stat2: "Călători",
+        stat3: "Rute",
+        feat1_title: "Itinerar vizual",
+        feat1_desc: "Construiește-ți călătoria zi cu zi, cu hărți și notițe personale.",
+        feat2_title: "Carduri destinații",
+        feat2_desc: "Inspirație din întreaga lume, organizate după sezon și buget.",
+        feat3_title: "Jurnal de bord",
+        feat3_desc: "Salvează amintiri, fotografii și impresii din fiecare etapă.",
+        dest_label: "Explorează lumea",
+        dest_title: "Destinații de vis",
+        itin_label: "Planifică-ți traseul",
+        itin_title: "Itinerar personalizat",
+        about_title_1: "Despre",
+        about_title_2: "Voyager",
+        about_sub: "Un companion de călătorie digital, construit cu pasiune pentru explorare.",
+        contact_title: "Contactează-ne",
+        contact_sub: "Ai întrebări sau sugestii? Suntem bucuroși să te ascultăm.",
+        login_title: "Bun venit înapoi",
+        login_sub: "Autentifică-te pentru a continua aventura",
+        reg_title: "Alătură-te Voyager",
+        reg_sub: "Creează-ți contul gratuit",
+        dash_welcome: "Bun venit,",
+        dash_sub: "Iată un rezumat al călătoriilor tale",
+        toast_login_ok: "Autentificat cu succes! Bun venit!",
+        toast_login_err: "Email sau parolă incorectă.",
+        toast_reg_ok: "Cont creat cu succes! Te-ai autentificat.",
+        toast_reg_err: "Emailul este deja înregistrat.",
+        toast_logout: "Deconectat cu succes. La revedere!",
+        toast_saved: "Salvat cu succes!",
+        toast_deleted: "Șters cu succes!",
+        toast_contact: "Mesajul tău a fost trimis! Îți vom răspunde curând.",
+        validate_required: "Câmp obligatoriu",
+        validate_email: "Email invalid",
+        validate_pass_short: "Parola trebuie să aibă cel puțin 6 caractere",
+        validate_pass_match: "Parolele nu coincid",
+        validate_name: "Numele trebuie să aibă cel puțin 2 caractere",
+        btn_add_dest: "Adaugă destinație",
+        btn_add_itin: "Adaugă etapă",
+        btn_save: "Salvează",
+        btn_cancel: "Anulează",
+        btn_edit: "Editează",
+        btn_delete: "Șterge",
+        btn_login: "Autentifică-te",
+        btn_register: "Înregistrează-te",
+        btn_send: "Trimite mesajul",
+        lbl_email: "Email",
+        lbl_pass: "Parolă",
+        lbl_name: "Nume complet",
+        lbl_confirm_pass: "Confirmă parola",
+        lbl_message: "Mesaj",
+        lbl_subject: "Subiect",
+        lbl_city: "Oraș / Destinație",
+        lbl_country: "Țară",
+        lbl_desc: "Descriere",
+        lbl_days: "Zile planificate",
+        lbl_budget: "Buget estimat",
+        lbl_day: "Ziua",
+        lbl_activity: "Activitate",
+        no_dest: "Nu ai adăugat nicio destinație încă.",
+        no_itin: "Itinerarul tău este gol. Adaugă prima etapă!",
+        protected_msg: "Trebuie să fii autentificat pentru a accesa această pagină.",
+    },
+    en: {
+        nav_home: "Home",
+        nav_about: "About",
+        nav_features: "Destinations",
+        nav_dashboard: "Dashboard",
+        nav_contact: "Contact",
+        nav_login: "Login",
+        nav_register: "Register",
+        nav_logout: "Logout",
+        hero_eyebrow: "Your travel planner",
+        hero_title_1: "Explore",
+        hero_title_2: "the world",
+        hero_title_3: "in style",
+        hero_sub: "Plan unforgettable routes, discover hidden destinations and carry every road memory with you.",
+        hero_btn1: "Start the adventure",
+        hero_btn2: "Discover destinations",
+        stat1: "Destinations",
+        stat2: "Travelers",
+        stat3: "Routes",
+        feat1_title: "Visual Itinerary",
+        feat1_desc: "Build your journey day by day, with maps and personal notes.",
+        feat2_title: "Destination Cards",
+        feat2_desc: "Inspiration from around the world, organized by season and budget.",
+        feat3_title: "Travel Journal",
+        feat3_desc: "Save memories, photos and impressions from each leg of the journey.",
+        dest_label: "Explore the world",
+        dest_title: "Dream Destinations",
+        itin_label: "Plan your route",
+        itin_title: "Custom Itinerary",
+        about_title_1: "About",
+        about_title_2: "Voyager",
+        about_sub: "A digital travel companion, built with a passion for exploration.",
+        contact_title: "Contact Us",
+        contact_sub: "Have questions or suggestions? We'd love to hear from you.",
+        login_title: "Welcome back",
+        login_sub: "Sign in to continue your adventure",
+        reg_title: "Join Voyager",
+        reg_sub: "Create your free account",
+        dash_welcome: "Welcome,",
+        dash_sub: "Here's a summary of your travels",
+        toast_login_ok: "Successfully logged in! Welcome back!",
+        toast_login_err: "Incorrect email or password.",
+        toast_reg_ok: "Account created successfully! You are now logged in.",
+        toast_reg_err: "Email is already registered.",
+        toast_logout: "Logged out successfully. Goodbye!",
+        toast_saved: "Saved successfully!",
+        toast_deleted: "Deleted successfully!",
+        toast_contact: "Your message was sent! We'll reply soon.",
+        validate_required: "Required field",
+        validate_email: "Invalid email",
+        validate_pass_short: "Password must be at least 6 characters",
+        validate_pass_match: "Passwords do not match",
+        validate_name: "Name must be at least 2 characters",
+        btn_add_dest: "Add destination",
+        btn_add_itin: "Add stage",
+        btn_save: "Save",
+        btn_cancel: "Cancel",
+        btn_edit: "Edit",
+        btn_delete: "Delete",
+        btn_login: "Sign In",
+        btn_register: "Register",
+        btn_send: "Send message",
+        lbl_email: "Email",
+        lbl_pass: "Password",
+        lbl_name: "Full name",
+        lbl_confirm_pass: "Confirm password",
+        lbl_message: "Message",
+        lbl_subject: "Subject",
+        lbl_city: "City / Destination",
+        lbl_country: "Country",
+        lbl_desc: "Description",
+        lbl_days: "Planned days",
+        lbl_budget: "Estimated budget",
+        lbl_day: "Day",
+        lbl_activity: "Activity",
+        no_dest: "You haven't added any destinations yet.",
+        no_itin: "Your itinerary is empty. Add the first stage!",
+        protected_msg: "You must be logged in to access this page.",
+    },
+    ru: {
+        nav_home: "Главная",
+        nav_about: "О нас",
+        nav_features: "Направления",
+        nav_dashboard: "Панель",
+        nav_contact: "Контакт",
+        nav_login: "Войти",
+        nav_register: "Регистрация",
+        nav_logout: "Выйти",
+        hero_eyebrow: "Ваш планировщик путешествий",
+        hero_title_1: "Исследуй",
+        hero_title_2: "мир",
+        hero_title_3: "со стилем",
+        hero_sub: "Планируйте незабываемые маршруты, открывайте скрытые направления и храните каждое воспоминание о дороге.",
+        hero_btn1: "Начать приключение",
+        hero_btn2: "Открыть направления",
+        stat1: "Направления",
+        stat2: "Путешественники",
+        stat3: "Маршруты",
+        feat1_title: "Визуальный маршрут",
+        feat1_desc: "Стройте путешествие день за днём, с картами и личными заметками.",
+        feat2_title: "Карточки назначений",
+        feat2_desc: "Вдохновение со всего мира, по сезонам и бюджету.",
+        feat3_title: "Бортовой журнал",
+        feat3_desc: "Сохраняйте воспоминания, фотографии и впечатления с каждого этапа.",
+        dest_label: "Исследуйте мир",
+        dest_title: "Мечты о путешествиях",
+        itin_label: "Спланируйте маршрут",
+        itin_title: "Персональный маршрут",
+        about_title_1: "О проекте",
+        about_title_2: "Voyager",
+        about_sub: "Цифровой компаньон путешественника, созданный с любовью к исследованиям.",
+        contact_title: "Связаться с нами",
+        contact_sub: "Есть вопросы или предложения? Мы рады вас услышать.",
+        login_title: "С возвращением",
+        login_sub: "Войдите, чтобы продолжить приключение",
+        reg_title: "Присоединиться к Voyager",
+        reg_sub: "Создайте бесплатный аккаунт",
+        dash_welcome: "Добро пожаловать,",
+        dash_sub: "Обзор ваших путешествий",
+        toast_login_ok: "Успешный вход! Добро пожаловать!",
+        toast_login_err: "Неверный email или пароль.",
+        toast_reg_ok: "Аккаунт создан! Вы вошли в систему.",
+        toast_reg_err: "Email уже зарегистрирован.",
+        toast_logout: "Выход выполнен успешно. До свидания!",
+        toast_saved: "Сохранено успешно!",
+        toast_deleted: "Удалено успешно!",
+        toast_contact: "Ваше сообщение отправлено!",
+        validate_required: "Обязательное поле",
+        validate_email: "Неверный email",
+        validate_pass_short: "Пароль должен содержать не менее 6 символов",
+        validate_pass_match: "Пароли не совпадают",
+        validate_name: "Имя должно содержать не менее 2 символов",
+        btn_add_dest: "Добавить направление",
+        btn_add_itin: "Добавить этап",
+        btn_save: "Сохранить",
+        btn_cancel: "Отмена",
+        btn_edit: "Редактировать",
+        btn_delete: "Удалить",
+        btn_login: "Войти",
+        btn_register: "Зарегистрироваться",
+        btn_send: "Отправить",
+        lbl_email: "Email",
+        lbl_pass: "Пароль",
+        lbl_name: "Полное имя",
+        lbl_confirm_pass: "Подтвердить пароль",
+        lbl_message: "Сообщение",
+        lbl_subject: "Тема",
+        lbl_city: "Город / Направление",
+        lbl_country: "Страна",
+        lbl_desc: "Описание",
+        lbl_days: "Планируемых дней",
+        lbl_budget: "Примерный бюджет",
+        lbl_day: "День",
+        lbl_activity: "Активность",
+        no_dest: "Вы ещё не добавили ни одного направления.",
+        no_itin: "Ваш маршрут пуст. Добавьте первый этап!",
+        protected_msg: "Для доступа к этой странице необходимо войти в систему.",
+    }
+};
 
 // ─── STATE ────────────────────────────────────
 let state = {
@@ -61,6 +288,8 @@ function showToast(message, type = 'success', duration = 3500) {
 // ─── THEME ───────────────────────────────────
 function applyTheme() {
     document.documentElement.setAttribute('data-theme', state.theme);
+    // suportă ambele id-uri
+    const btn = document.getElementById('themeToggle') || document.getElementById('themeBtn');
 
     const iconMoon = document.getElementById('iconMoon');
     const iconSun = document.getElementById('iconSun');
@@ -68,6 +297,8 @@ function applyTheme() {
     if (iconMoon && iconSun) {
         iconMoon.style.display = state.theme === 'dark' ? 'none' : '';
         iconSun.style.display = state.theme === 'dark' ? '' : 'none';
+    } else if (btn) {
+        btn.textContent = state.theme === 'dark' ? '☀️' : '🌙';
     }
 }
 
@@ -504,10 +735,13 @@ function closeAllModals() {
 }
 
 // ─── HAMBURGER ───────────────────────────────
+function toggleMobileNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+}
+// păstrezi și vechea funcție
 function toggleNav() {
     document.getElementById('navLinks').classList.toggle('open');
 }
-
 // ─── INIT ─────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     // Restore session

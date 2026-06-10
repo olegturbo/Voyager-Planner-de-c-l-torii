@@ -1,15 +1,12 @@
 <?php
+
+/**
+ * VOYAGER — login.php
+ * Standalone login page. Redirects to dashboard on success.
+ */
 session_start();
 require_once 'php/auth.php';
-require_once 'php/function.php';
-
-
-$currentPage = 'login';
-
-if (isLoggedIn()) {
-    header('Location: dashboard.php');
-    exit;
-}
+require_once 'php/functions.php';
 
 $error = '';
 
@@ -33,13 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-
+// If already logged in, redirect
 if (isLoggedIn()) {
     header('Location: dashboard.php');
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="ro" data-theme="light">
 
@@ -51,42 +47,14 @@ if (isLoggedIn()) {
 </head>
 
 <body>
-    <!-- includes/navbar.php -->
     <nav class="navbar">
         <a class="nav-brand" href="index.php">✈ VOY<span>AGE</span>R</a>
         <ul class="nav-links" id="navLinks">
-            <li><a href="index.php" <?= $currentPage === 'home' ? 'class="active"' : '' ?>>ACASĂ</a></li>
-            <li><a href="about.php" <?= $currentPage === 'about' ? 'class="active"' : '' ?>>DESPRE</a></li>
-            <li><a href="destinations.php" <?= $currentPage === 'destinations' ? 'class="active"' : '' ?>>DESTINAȚII</a></li>
-            <li><a href="contact.php" <?= $currentPage === 'contact' ? 'class="active"' : '' ?>>CONTACT</a></li>
-            <?php if (isLoggedIn()): ?>
-                <li><a href="dashboard.php" <?= $currentPage === 'dashboard' ? 'class="active"' : '' ?>>TABLOU DE BORD</a></li>
-                <li><a href="logout.php">DECONECTARE</a></li>
-            <?php else: ?>
-                <li><a href="login.php" <?= $currentPage === 'login' ? 'class="active"' : '' ?>>AUTENTIFICARE</a></li>
-                <li><a href="register.php" <?= $currentPage === 'register' ? 'class="active"' : '' ?>>ÎNREGISTRARE</a></li>
-            <?php endif; ?>
+            <li><a href="index.php">Acasă</a></li>
+            <li><a href="register.php">Înregistrare</a></li>
         </ul>
         <div class="nav-controls">
-            <button class="btn-theme" id="themeBtn" onclick="toggleTheme()" title="Schimbă tema">
-                <svg id="iconMoon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                </svg>
-                <svg id="iconSun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
-                    <circle cx="12" cy="12" r="5" />
-                    <line x1="12" y1="1" x2="12" y2="3" />
-                    <line x1="12" y1="21" x2="12" y2="23" />
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                    <line x1="1" y1="12" x2="3" y2="12" />
-                    <line x1="21" y1="12" x2="23" y2="12" />
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                </svg>
-            </button>
-            <button class="hamburger" onclick="toggleNav()" aria-label="Meniu">
-                <span></span><span></span><span></span>
-            </button>
+            <button class="btn-icon" id="themeToggle" onclick="toggleTheme()">🌙</button>
         </div>
     </nav>
     <main style="padding-top:var(--nav-h)">
@@ -111,7 +79,7 @@ if (isLoggedIn()) {
                         <label class="form-label" for="password">Parolă</label>
                         <input type="password" id="password" name="password" class="form-input" placeholder="••••••••">
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem; display:inline-block; text-align:center;">Autentifică-te</button>
+                    <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem">Autentifică-te</button>
                 </form>
 
                 <div class="auth-footer">
@@ -120,7 +88,7 @@ if (isLoggedIn()) {
             </div>
         </div>
     </main>
-    <script src="script/script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

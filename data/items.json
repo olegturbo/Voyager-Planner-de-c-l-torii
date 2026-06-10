@@ -1,0 +1,46 @@
+[
+    {
+        "id": "dest_1",
+        "city": "Santorini",
+        "country": "Grecia",
+        "emoji": "🏛️",
+        "tag": "Europa",
+        "days": 5,
+        "budget": "1200€",
+        "desc": "Stânci albe, mare albastru și apusuri legendare.",
+        "rating": 5
+    },
+    {
+        "id": "dest_2",
+        "city": "Marrakech",
+        "country": "Maroc",
+        "emoji": "🕌",
+        "tag": "Africa",
+        "days": 7,
+        "budget": "800€",
+        "desc": "Piețe colorate, riads ascunse și arome de bazar.",
+        "rating": 4
+    },
+    {
+        "id": "dest_3",
+        "city": "Kyoto",
+        "country": "Japonia",
+        "emoji": "⛩️",
+        "tag": "Asia",
+        "days": 10,
+        "budget": "2000€",
+        "desc": "Temple antice, grădini zen și cireși în floare.",
+        "rating": 5
+    },
+    {
+        "id": "dest_4",
+        "city": "Patagonia",
+        "country": "Argentina",
+        "emoji": "🏔️",
+        "tag": "America Sud",
+        "days": 14,
+        "budget": "2500€",
+        "desc": "Ghețari spectaculoși și peisaje sălbatice unice.",
+        "rating": 5
+    }
+]
